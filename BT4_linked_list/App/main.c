@@ -4,11 +4,11 @@
 #include <string.h>
 #include <Task_Queue.h>
 #include <Activity_log.h>
-
+#include <stdbool.h>
 
 int main() {
     char command[100];
-
+    
     while (1) {
         printf("\nEnter command (add <decription>, run, list, history, quit): ");
         fgets(command, sizeof(command), stdin);

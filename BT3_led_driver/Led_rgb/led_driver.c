@@ -178,3 +178,22 @@ size_t led_get_pixel_count() {
     return led_count; // Return the number of pixels
 }
 
+/**
+ * @brief led display.
+ *
+ * This function returns the number of pixels in the LED strip.
+ * @param num_pixels, buffer
+ * @return
+ * @note 
+ */
+void led_display(size_t num_pixels, const uint32_t* buffer) {
+
+    if (buffer == NULL || num_pixels == 0) {
+        return; // Nothing to display
+    }
+
+    for (size_t i = 0; i < num_pixels; i++) {
+        printf("0x%08X[%ld]\t", buffer[i], i);
+    }
+    printf("\n");
+}
