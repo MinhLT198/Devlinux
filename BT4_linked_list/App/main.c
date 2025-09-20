@@ -8,7 +8,7 @@
 
 int main() {
     char command[100];
-    int a=1;
+
     while (1) {
         printf("\nEnter command (add <decription>, run, list, history, quit): ");
         fgets(command, sizeof(command), stdin);
