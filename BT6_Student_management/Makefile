@@ -1,57 +1,55 @@
-# Tên file thực thi
-TARGET=main
+# Executable
+TARGET = main
 
-# Thư mục gốc chứa mã nguồn
+# Source directories
 SRC_DIR = .
-
-# Thư mục chứa các file .c của các component
-# Học viên chỉ cần thêm tên thư mục component mới vào danh sách này
 COMPONENTS = include
-
-# Thư mục App chứa main.c
 APP_DIR = src
-
-# Thư mục để chứa các file .o và file thực thi
 BUILD_DIR = build
 
-# Cờ biên dịch và liên kết
-CC=g++
-# Tự động tạo cờ -I cho các component
-COMPONENT_INCLUDE_PATHS = $(foreach comp,$(COMPONENTS),-I$(SRC_DIR)/$(comp))
-CFLAGS = -g -O0 -I$(SRC_DIR)/$(APP_DIR) $(COMPONENT_INCLUDE_PATHS)
-LDFLAGS =
+# Compilers
+CC = gcc
+CXX = g++
+CFLAGS = -g -O0 -Wall -Wextra
+CXXFLAGS = -g -O0 -Wall -Wextra -std=c++17
+CPPFLAGS = $(foreach comp,$(COMPONENTS),-I$(SRC_DIR)/$(comp)) -I$(SRC_DIR)/$(APP_DIR)
 
-# Tìm tất cả các file .c trong các thư mục component và thư mục App
-COMPONENT_SRC = $(foreach comp,$(COMPONENTS),$(wildcard $(SRC_DIR)/$(comp)/*.cpp))
-APP_SRC = $(wildcard $(SRC_DIR)/$(APP_DIR)/*.cpp)
+# Source files
+COMPONENT_SRC = $(foreach comp,$(COMPONENTS),$(wildcard $(SRC_DIR)/$(comp)/*.cpp) $(wildcard $(SRC_DIR)/$(comp)/*.c))
+APP_SRC = $(wildcard $(SRC_DIR)/$(APP_DIR)/*.cpp) $(wildcard $(SRC_DIR)/$(APP_DIR)/*.c)
 SRC_FILES = $(COMPONENT_SRC) $(APP_SRC)
 
-# Tạo danh sách các file .o tương ứng
-OBJ_FILES = $(patsubst $(SRC_DIR)/%.cpp,$(BUILD_DIR)/%.o,$(SRC_FILES))
+# Object & dep files
+OBJ_FILES = $(patsubst $(SRC_DIR)/%.cpp,$(BUILD_DIR)/%.o,$(patsubst $(SRC_DIR)/%.c,$(BUILD_DIR)/%.o,$(SRC_FILES)))
+DEP_FILES = $(OBJ_FILES:.o=.d)
 
-# Mục tiêu mặc định
+# Default
 .PHONY: all
-all: $(BUILD_DIR) $(BUILD_DIR)/$(TARGET)
+all: $(BUILD_DIR)/$(TARGET)
 
-# Quy tắc biên dịch file .c thành file .o
+# Link
+$(BUILD_DIR)/$(TARGET): $(OBJ_FILES)
+	$(CXX) $^ -o $@
+
+# Build rule for .cpp
 $(BUILD_DIR)/%.o: $(SRC_DIR)/%.cpp
 	@mkdir -p $(dir $@)
-	$(CC) $(CFLAGS) -c $< -o $@
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -MMD -MP -c $< -o $@
 
-# Quy tắc liên kết các file .o thành file thực thi
-$(BUILD_DIR)/$(TARGET): $(OBJ_FILES)
-	$(CC) $(LDFLAGS) $^ -o $@
+# Build rule for .c
+$(BUILD_DIR)/%.o: $(SRC_DIR)/%.c
+	@mkdir -p $(dir $@)
+	$(CC) $(CPPFLAGS) $(CFLAGS) -MMD -MP -c $< -o $@
 
-# Tạo thư mục build nếu chưa tồn tại
-$(BUILD_DIR):
-	mkdir -p $(BUILD_DIR)
+# Include deps
+-include $(DEP_FILES)
 
-# Mục tiêu dọn dẹp các file đã biên dịch
+# Clean
 .PHONY: clean
 clean:
-	rm -rf $(BUILD_DIR)
+	$(RM) -r $(BUILD_DIR)
 
-# Mục tiêu chạy chương trình
+# Run
 .PHONY: run
 run: all
 	./$(BUILD_DIR)/$(TARGET)
