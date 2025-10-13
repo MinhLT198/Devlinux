@@ -1,0 +1,9 @@
+/home/admin1/Devlinux/IOT_CPRO_K52_Mock_Prj/build/CMakeFiles/IOT_CPRO_K52_Mock_Prj.dir
+/home/admin1/Devlinux/IOT_CPRO_K52_Mock_Prj/build/CMakeFiles/edit_cache.dir
+/home/admin1/Devlinux/IOT_CPRO_K52_Mock_Prj/build/CMakeFiles/rebuild_cache.dir
+/home/admin1/Devlinux/IOT_CPRO_K52_Mock_Prj/build/CMakeFiles/list_install_components.dir
+/home/admin1/Devlinux/IOT_CPRO_K52_Mock_Prj/build/CMakeFiles/install.dir
+/home/admin1/Devlinux/IOT_CPRO_K52_Mock_Prj/build/CMakeFiles/install/local.dir
+/home/admin1/Devlinux/IOT_CPRO_K52_Mock_Prj/build/CMakeFiles/install/strip.dir
+/home/admin1/Devlinux/IOT_CPRO_K52_Mock_Prj/build/CMakeFiles/IOT_CPRO_K52_Mock_Prj_autogen_timestamp_deps.dir
+/home/admin1/Devlinux/IOT_CPRO_K52_Mock_Prj/build/CMakeFiles/IOT_CPRO_K52_Mock_Prj_autogen.dir
