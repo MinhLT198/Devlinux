@@ -21,7 +21,7 @@ public:
     // public methods addDevice, removeDevice, getDevices are used by application
     void addDevice(std::unique_ptr<Device> dev);
     void removeDevice(const std::string id);
-    const std::vector<std::unique_ptr<Device>>& getDevices();
+    const std::vector<std::unique_ptr<Device>>& getDevices() const;
 };
 
 #endif // DEVICEMANAGER_H

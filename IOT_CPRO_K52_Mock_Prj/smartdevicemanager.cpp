@@ -17,12 +17,15 @@ SmartDeviceManager::SmartDeviceManager(QWidget *parent)
 
 void SmartDeviceManager::updateDeviceList(const std::vector<std::unique_ptr<Device>>& list)
 {
+    ui->listWidget->blockSignals(true);
     ui->listWidget->clear();
+    ui->txtDevInfo->clear();
     
     for(auto& device:list)
     {
         ui->listWidget->addItem(QString::fromStdString(device->getDevName()));
     }
+    ui->listWidget->blockSignals(false);
 }
 
 SmartDeviceManager::~SmartDeviceManager()
@@ -106,10 +109,6 @@ void SmartDeviceManager::on_btnRemoveDevice_clicked()
         // Gọi hàm xóa thiết bị ở đây
         if(!deviceId.empty())
         {
-            // clear danh sach thiet bi tranh th out_of_range khi remove thiet bi
-            ui->listWidget->clear();
-            ui->txtDevInfo->clear();
-
             deviceManager::getInstance().removeDevice(deviceId);
             updateDeviceList(deviceManager::getInstance().getDevices());
             ui->txtLogging->appendPlainText("");

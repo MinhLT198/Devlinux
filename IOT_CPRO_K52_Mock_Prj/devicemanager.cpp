@@ -38,7 +38,7 @@ void deviceManager::removeDevice(const std::string id)
 }
 
 
-const std::vector<std::unique_ptr<Device>>& deviceManager::getDevices()
+const std::vector<std::unique_ptr<Device>>& deviceManager::getDevices()  const
 {
     return devices;
 }
